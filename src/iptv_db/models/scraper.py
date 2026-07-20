@@ -3,7 +3,7 @@
 import uuid
 from datetime import datetime
 
-from sqlalchemy import DateTime, Integer, String, Text
+from sqlalchemy import DateTime, Index, Integer, String, Text, text
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -25,4 +25,19 @@ class ScraperFailure(Base):
     retry_count: Mapped[int | None] = mapped_column(Integer, default=1)
     last_retry_at: Mapped[datetime | None] = mapped_column(
         DateTime(timezone=True), default=lambda: datetime.now().astimezone()
+    )
+
+    __table_args__ = (
+        Index(
+            "idx_failures_provider",
+            "provider_id",
+            unique=True,
+            postgresql_where=text("provider_id IS NOT NULL"),
+        ),
+        Index(
+            "idx_failures_series",
+            "series_key",
+            unique=True,
+            postgresql_where=text("series_key IS NOT NULL"),
+        ),
     )

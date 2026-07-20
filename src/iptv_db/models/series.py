@@ -9,10 +9,12 @@ from sqlalchemy import (
     DateTime,
     Float,
     ForeignKey,
+    Index,
     Integer,
     String,
     Text,
     UniqueConstraint,
+    text,
 )
 from sqlalchemy.dialects.postgresql import ARRAY, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -45,6 +47,21 @@ class SeriesCatalog(Base):
     countries: Mapped[list[str] | None] = mapped_column(ARRAY(String(10)), nullable=True)
     group_normalizado: Mapped[str | None] = mapped_column(Text, nullable=True)
     logo: Mapped[str | None] = mapped_column(Text, nullable=True)
+    # Legacy columns — exist in BD, added to ORM for Alembic alignment
+    not_found: Mapped[bool | None] = mapped_column(Boolean, nullable=True, server_default="false")
+    retry_count: Mapped[int | None] = mapped_column(Integer, nullable=True, server_default="0")
+    last_error: Mapped[str | None] = mapped_column(Text, nullable=True)
+    last_sync_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+
+    __table_args__ = (
+        Index(
+            "uq_series_catalog_tmdb",
+            "tmdb_id",
+            unique=True,
+            postgresql_where=text("tmdb_id IS NOT NULL"),
+        ),
+    )
+
     created_at: Mapped[datetime | None] = mapped_column(
         DateTime(timezone=True), default=lambda: datetime.now().astimezone()
     )
@@ -87,6 +104,12 @@ class SeriesEpisode(Base):
     vote_count: Mapped[int | None] = mapped_column(Integer, nullable=True)
     episode_type: Mapped[str | None] = mapped_column(String(50), nullable=True)
     tmdb_checked: Mapped[bool | None] = mapped_column(Boolean, default=False)
+    # Legacy columns — exist in BD, added to ORM for Alembic alignment
+    tmdb_not_found: Mapped[bool | None] = mapped_column(
+        Boolean, nullable=True, server_default="false"
+    )
+    tmdb_retry_count: Mapped[int | None] = mapped_column(Integer, nullable=True, server_default="0")
+    tmdb_last_error: Mapped[str | None] = mapped_column(Text, nullable=True)
 
     __table_args__ = (UniqueConstraint("catalog_id", "season_number", "episode_number"),)
 
@@ -105,5 +128,7 @@ class SeriesStream(StreamBase):
         ForeignKey("series_episodes.id", ondelete="CASCADE"),
         nullable=False,
     )
+
+    __table_args__ = (UniqueConstraint("episode_id", "provider_id", name="uq_series_streams"),)
 
     episode: Mapped["SeriesEpisode"] = relationship(back_populates="streams")

@@ -11,6 +11,12 @@ from iptv_db.models.base import Base
 
 
 class Channel(Base):
+    """IPTV channel model.
+
+    Legacy columns (added after initial ORM, exist in BD but not tracked before):
+    - stream_url, ultimo_chequeo, estado_stream, tiempo_respuesta_ms, last_sync_at
+    """
+
     __tablename__ = "channels"
 
     id: Mapped[str] = mapped_column(String(50), primary_key=True)
@@ -24,6 +30,12 @@ class Channel(Base):
     url: Mapped[str] = mapped_column(Text, nullable=False)
     numero: Mapped[int | None] = mapped_column(Integer, nullable=True)
     tvg_id: Mapped[str | None] = mapped_column(String(100), nullable=True)
+    # Legacy columns — exist in BD, need to be in ORM for Alembic autogenerate alignment
+    stream_url: Mapped[str | None] = mapped_column(Text, nullable=True)
+    ultimo_chequeo: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    estado_stream: Mapped[str | None] = mapped_column(String(50), nullable=True)
+    tiempo_respuesta_ms: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    last_sync_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     created_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
 
 

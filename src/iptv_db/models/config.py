@@ -25,18 +25,22 @@ class SyncMetadata(Base):
 
     id: Mapped[str] = mapped_column(String(50), primary_key=True)
     ultima_actualizacion: Mapped[datetime | None] = mapped_column(TIMESTAMP, nullable=True)
-    total_canales: Mapped[int | None] = mapped_column(Integer, nullable=True)
-    total_movies: Mapped[int | None] = mapped_column(Integer, nullable=True)
-    total_series: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    total_canales: Mapped[int | None] = mapped_column(Integer, nullable=True, server_default="0")
+    total_movies: Mapped[int | None] = mapped_column(Integer, nullable=True, server_default="0")
+    total_series: Mapped[int | None] = mapped_column(Integer, nullable=True, server_default="0")
     m3u_template_path: Mapped[str | None] = mapped_column(Text, nullable=True)
     m3u_template_filename: Mapped[str | None] = mapped_column(Text, nullable=True)
     m3u_size_mb: Mapped[float | None] = mapped_column(Numeric(10, 2), nullable=True)
-    channels_con_logo: Mapped[int | None] = mapped_column(Integer, nullable=True)
-    channels_sin_logo: Mapped[int | None] = mapped_column(Integer, nullable=True)
-    movies_con_logo: Mapped[int | None] = mapped_column(Integer, nullable=True)
-    movies_sin_logo: Mapped[int | None] = mapped_column(Integer, nullable=True)
-    series_con_logo: Mapped[int | None] = mapped_column(Integer, nullable=True)
-    series_sin_logo: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    channels_con_logo: Mapped[int | None] = mapped_column(
+        Integer, nullable=True, server_default="0"
+    )
+    channels_sin_logo: Mapped[int | None] = mapped_column(
+        Integer, nullable=True, server_default="0"
+    )
+    movies_con_logo: Mapped[int | None] = mapped_column(Integer, nullable=True, server_default="0")
+    movies_sin_logo: Mapped[int | None] = mapped_column(Integer, nullable=True, server_default="0")
+    series_con_logo: Mapped[int | None] = mapped_column(Integer, nullable=True, server_default="0")
+    series_sin_logo: Mapped[int | None] = mapped_column(Integer, nullable=True, server_default="0")
     created_at: Mapped[datetime | None] = mapped_column(TIMESTAMP, nullable=True)
     updated_at: Mapped[datetime | None] = mapped_column(TIMESTAMP, nullable=True)
     channels_generated_at: Mapped[datetime | None] = mapped_column(TIMESTAMP, nullable=True)

@@ -4,13 +4,17 @@ import uuid
 from datetime import datetime
 
 from sqlalchemy import (
+    Boolean,
     Date,
     DateTime,
     Float,
     ForeignKey,
+    Index,
     Integer,
     String,
     Text,
+    UniqueConstraint,
+    text,
 )
 from sqlalchemy.dialects.postgresql import ARRAY, JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -112,6 +116,20 @@ class MovieCatalog(CatalogBase):
         ForeignKey("movies_metadata.tmdb_id", ondelete="SET NULL"),
         nullable=True,
     )
+    # Legacy columns — exist in BD, added to ORM for Alembic alignment
+    not_found: Mapped[bool | None] = mapped_column(Boolean, nullable=True, server_default="false")
+    retry_count: Mapped[int | None] = mapped_column(Integer, nullable=True, server_default="0")
+    last_error: Mapped[str | None] = mapped_column(Text, nullable=True)
+    last_sync_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+
+    __table_args__ = (
+        Index(
+            "uq_movies_catalog_tmdb",
+            "tmdb_id",
+            unique=True,
+            postgresql_where=text("tmdb_id IS NOT NULL"),
+        ),
+    )
 
     metadata_row: Mapped["MovieMetadata | None"] = relationship(
         "MovieMetadata",
@@ -132,5 +150,7 @@ class MovieStream(StreamBase):
         ForeignKey("movies_catalog.id", ondelete="CASCADE"),
         nullable=False,
     )
+
+    __table_args__ = (UniqueConstraint("movie_id", "provider_id", name="uq_movie_streams"),)
 
     movie: Mapped["MovieCatalog"] = relationship(back_populates="streams")

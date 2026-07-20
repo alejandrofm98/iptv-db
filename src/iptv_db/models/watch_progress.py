@@ -46,5 +46,6 @@ class WatchProgress(Base):
             "season_number",
             "episode_number",
             name="watch_progress_user_content_unique",
+            postgresql_nulls_not_distinct=True,
         ),
     )
