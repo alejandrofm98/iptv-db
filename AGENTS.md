@@ -117,7 +117,7 @@ except NotFoundError:
 
 1. Editar `src/iptv_db/models/<file>.py` — agregar columna al modelo
 2. `cd iptv-db && alembic revision --autogenerate -m "add column X"`
-3. Revisar el archivo generado en `alembic/versions/`
+3. Revisar el archivo generado en `src/iptv_db/migrations/versions/`
 4. `alembic upgrade head` (test local)
 5. `alembic downgrade -1` (verificar rollback)
 6. Commit + push a GitHub
