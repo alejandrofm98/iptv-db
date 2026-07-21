@@ -19,7 +19,7 @@
 
 | Proyecto         | Como lo usa                                          |
 |------------------|------------------------------------------------------|
-| `iptv-api`       | Modelos via shims en `app/models/`, env.py apunta aca |
+| `iptv-api`       | Modelos via shims en `src/iptv_api/models/`, env.py apunta aca |
 | `walactv-scrapper` | Modelos y engine en scripts, database.py gestiona ambos |
 | `walactvWeb` / `WalacTV` | No lo usan directamente (consumen iptv-api) |
 
