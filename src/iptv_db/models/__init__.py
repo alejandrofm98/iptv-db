@@ -8,6 +8,7 @@ from iptv_db.models.channel_variant import ChannelVariant
 from iptv_db.models.config import Config, SyncMetadata
 from iptv_db.models.content import MovieCatalog, MovieMetadata, MovieStream
 from iptv_db.models.replay import Replay
+from iptv_db.models.trending import TrendingRanking
 from iptv_db.models.scraper import ScraperFailure
 from iptv_db.models.series import SeriesCatalog, SeriesEpisode, SeriesMetadata, SeriesStream
 from iptv_db.models.user import ActiveSession, User
@@ -32,6 +33,7 @@ __all__ = [
     "SeriesMetadata",
     "SeriesStream",
     "SyncMetadata",
+    "TrendingRanking",
     "User",
     "WatchProgress",
 ]
