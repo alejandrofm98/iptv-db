@@ -6,6 +6,7 @@ from datetime import datetime
 from sqlalchemy import (
     BigInteger,
     Boolean,
+    CheckConstraint,
     DateTime,
     ForeignKey,
     Integer,
@@ -58,4 +59,9 @@ class VideoSegment(Base):
     fetched_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     expires_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
 
-    __table_args__ = (UniqueConstraint("episode_id", "segment_type", "source"),)
+    __table_args__ = (
+        UniqueConstraint("episode_id", "segment_type", "source"),
+        CheckConstraint("segment_type IN ('intro', 'recap', 'outro')"),
+        CheckConstraint("start_ms >= 0"),
+        CheckConstraint("end_ms > start_ms"),
+    )

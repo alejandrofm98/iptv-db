@@ -20,6 +20,8 @@ def test_base_imports() -> None:
         SeriesStream,
         SyncMetadata,
         User,
+        VideoSegment,
+        VideoSegmentSync,
         WatchProgress,
     )
 
@@ -40,6 +42,8 @@ def test_base_imports() -> None:
         "playback_preferences",
         "replays",
         "scraper_failures",
+        "video_segment_sync",
+        "video_segments",
         "config",
         "sync_metadata",
     }
@@ -86,3 +90,26 @@ def test_exceptions_hierarchy() -> None:
     assert issubclass(NotFoundError, DatabaseError)
     assert issubclass(ConstraintViolationError, DatabaseError)
     assert issubclass(ConnectionError, DatabaseError)
+
+
+def test_video_segment_constraints() -> None:
+    from iptv_db.models import Base, VideoSegment, VideoSegmentSync
+
+    segments = Base.metadata.tables[VideoSegment.__tablename__]
+    sync = Base.metadata.tables[VideoSegmentSync.__tablename__]
+
+    assert [column.name for column in segments.primary_key.columns] == ["id"]
+    assert {column.name for column in sync.primary_key.columns} == {"episode_id", "source"}
+    assert any(
+        list(constraint.columns.keys()) == ["episode_id", "segment_type", "source"]
+        for constraint in segments.constraints
+        if constraint.__class__.__name__ == "UniqueConstraint"
+    )
+    check_sql = {
+        str(constraint.sqltext)
+        for constraint in segments.constraints
+        if constraint.__class__.__name__ == "CheckConstraint"
+    }
+    assert "segment_type IN ('intro', 'recap', 'outro')" in check_sql
+    assert "start_ms >= 0" in check_sql
+    assert "end_ms > start_ms" in check_sql

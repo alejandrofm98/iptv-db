@@ -24,7 +24,7 @@ def build_url(
     async_driver: bool = False,
 ) -> str:
     """Build a SQLAlchemy URL from individual connection params."""
-    driver = "postgresql+psycopg"
+    driver = DEFAULT_DIALECT_ASYNC if async_driver else DEFAULT_DIALECT
     return f"{driver}://{user}:{password}@{host}:{port}/{database}"
 
 
