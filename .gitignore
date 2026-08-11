@@ -8,6 +8,9 @@ build/
 # Environment
 .env
 .venv/
+
+# Local production seed containing credentials
+src/iptv_db/migrations/versions/b8f3e1a4c2d7_seed_initial_data.py
 venv/
 
 # IDE
