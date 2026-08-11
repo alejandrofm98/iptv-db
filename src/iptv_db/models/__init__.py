@@ -13,6 +13,7 @@ from iptv_db.models.scraper import ScraperFailure
 from iptv_db.models.series import SeriesCatalog, SeriesEpisode, SeriesMetadata, SeriesStream
 from iptv_db.models.trending import TrendingRanking
 from iptv_db.models.user import ActiveSession, User
+from iptv_db.models.video_segment import VideoSegment, VideoSegmentSync
 from iptv_db.models.watch_progress import WatchProgress
 
 __all__ = [
@@ -37,5 +38,7 @@ __all__ = [
     "SyncMetadata",
     "TrendingRanking",
     "User",
+    "VideoSegment",
+    "VideoSegmentSync",
     "WatchProgress",
 ]

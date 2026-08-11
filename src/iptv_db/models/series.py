@@ -103,6 +103,7 @@ class SeriesEpisode(Base):
     vote_average: Mapped[float | None] = mapped_column(Float, nullable=True)
     vote_count: Mapped[int | None] = mapped_column(Integer, nullable=True)
     episode_type: Mapped[str | None] = mapped_column(String(50), nullable=True)
+    imdb_id: Mapped[str | None] = mapped_column(String(20), nullable=True)
     tmdb_checked: Mapped[bool | None] = mapped_column(Boolean, default=False)
     # Legacy columns — exist in BD, added to ORM for Alembic alignment
     tmdb_not_found: Mapped[bool | None] = mapped_column(
@@ -111,7 +112,10 @@ class SeriesEpisode(Base):
     tmdb_retry_count: Mapped[int | None] = mapped_column(Integer, nullable=True, server_default="0")
     tmdb_last_error: Mapped[str | None] = mapped_column(Text, nullable=True)
 
-    __table_args__ = (UniqueConstraint("catalog_id", "season_number", "episode_number"),)
+    __table_args__ = (
+        UniqueConstraint("catalog_id", "season_number", "episode_number"),
+        Index("ix_series_episodes_imdb_id", "imdb_id"),
+    )
 
     catalog: Mapped["SeriesCatalog"] = relationship(back_populates="episodes")
     streams: Mapped[list["SeriesStream"]] = relationship(

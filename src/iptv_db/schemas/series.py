@@ -67,6 +67,7 @@ class SeriesEpisodeDB(BaseModel):
     vote_average: float | None = None
     vote_count: int | None = None
     episode_type: str | None = None
+    imdb_id: str | None = None
     tmdb_checked: bool | None = None
 
 
