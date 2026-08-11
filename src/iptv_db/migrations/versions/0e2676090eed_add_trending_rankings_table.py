@@ -10,7 +10,6 @@ from collections.abc import Sequence
 
 import sqlalchemy as sa
 from alembic import op
-from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
 revision: str = "0e2676090eed"
@@ -32,7 +31,9 @@ def upgrade() -> None:
         sa.Column("scraped_at", sa.DateTime(timezone=True), nullable=False),
         sa.PrimaryKeyConstraint("id"),
         sa.UniqueConstraint(
-            "tmdb_id", "media_type", "trending_window",
+            "tmdb_id",
+            "media_type",
+            "trending_window",
             name="uq_trending_tmdb_window",
         ),
     )

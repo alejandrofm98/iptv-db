@@ -63,13 +63,20 @@ src/iptv_db/
 
 ```python
 from iptv_db.models import (
-    User, Channel, MovieCatalog, SeriesCatalog,
-    MovieStream, SeriesEpisode, SeriesStream,
-    ScraperFailure, Replay,
+    User,
+    Channel,
+    MovieCatalog,
+    SeriesCatalog,
+    MovieStream,
+    SeriesEpisode,
+    SeriesStream,
+    ScraperFailure,
+    Replay,
 )
 
 # Uso con SQLAlchemy 2.0
 from iptv_db.models import Channel
+
 session.query(Channel).filter_by(provider_id="123").first()
 ```
 
@@ -77,9 +84,13 @@ session.query(Channel).filter_by(provider_id="123").first()
 
 ```python
 from iptv_db.engine import (
-    get_sync_engine, get_async_engine,
-    get_sync_session_factory, get_async_session_factory,
-    build_url, session_scope, async_session_scope,
+    get_sync_engine,
+    get_async_engine,
+    get_sync_session_factory,
+    get_async_session_factory,
+    build_url,
+    session_scope,
+    async_session_scope,
 )
 
 # Sync (scripts one-shot, CLI, batch)
@@ -98,7 +109,10 @@ async with session_scope(factory) as session:
 
 ```python
 from iptv_db.exceptions import (
-    DatabaseError, NotFoundError, ConstraintViolationError, ConnectionError,
+    DatabaseError,
+    NotFoundError,
+    ConstraintViolationError,
+    ConnectionError,
 )
 
 try:

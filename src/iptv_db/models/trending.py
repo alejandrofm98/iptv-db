@@ -13,9 +13,7 @@ from iptv_db.models.base import Base
 class TrendingRanking(Base):
     __tablename__ = "trending_rankings"
 
-    id: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True), primary_key=True, default=uuid.uuid4
-    )
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     tmdb_id: Mapped[str] = mapped_column(String(20), nullable=False)
     media_type: Mapped[str] = mapped_column(String(20), nullable=False)
     rank: Mapped[int] = mapped_column(Integer, nullable=False)
@@ -28,7 +26,9 @@ class TrendingRanking(Base):
 
     __table_args__ = (
         UniqueConstraint(
-            "tmdb_id", "media_type", "trending_window",
+            "tmdb_id",
+            "media_type",
+            "trending_window",
             name="uq_trending_tmdb_window",
         ),
     )

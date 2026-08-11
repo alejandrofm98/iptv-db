@@ -63,22 +63,22 @@ def downgrade() -> None:
 ```python
 def upgrade() -> None:
     # 1. Agregar como nullable
-    op.add_column('channels', sa.Column('new_field', sa.String(100), nullable=True))
+    op.add_column("channels", sa.Column("new_field", sa.String(100), nullable=True))
 
     # 2. Poblar con valor por defecto
     op.execute("UPDATE channels SET new_field = 'default_value' WHERE new_field IS NULL")
 
     # 3. Alterar a NOT NULL
-    op.alter_column('channels', 'new_field', nullable=False)
+    op.alter_column("channels", "new_field", nullable=False)
 ```
 
 #### Renombrar columna o tabla
 
 ```python
 def upgrade() -> None:
-    op.alter_column('old_name', 'new_name', new_column_name='new_name')
+    op.alter_column("old_name", "new_name", new_column_name="new_name")
     # o
-    op.rename_table('old_table', 'new_table')
+    op.rename_table("old_table", "new_table")
 ```
 
 #### Cambiar tipo de columna
@@ -86,12 +86,7 @@ def upgrade() -> None:
 ```python
 def upgrade() -> None:
     # Postgres-specific: puede requerir USING
-    op.alter_column(
-        'channels',
-        'id',
-        type_=sa.BigInteger(),
-        postgresql_using='id::bigint'
-    )
+    op.alter_column("channels", "id", type_=sa.BigInteger(), postgresql_using="id::bigint")
 ```
 
 ## Aplicar migrations
