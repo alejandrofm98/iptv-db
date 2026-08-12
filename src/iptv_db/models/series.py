@@ -47,6 +47,11 @@ class SeriesCatalog(Base):
     countries: Mapped[list[str] | None] = mapped_column(ARRAY(String(10)), nullable=True)
     group_normalizado: Mapped[str | None] = mapped_column(Text, nullable=True)
     logo: Mapped[str | None] = mapped_column(Text, nullable=True)
+    has_iptv_source: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+    has_torrent_source: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+    torrent_source_checked_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
     # Legacy columns — exist in BD, added to ORM for Alembic alignment
     not_found: Mapped[bool | None] = mapped_column(Boolean, nullable=True, server_default="false")
     retry_count: Mapped[int | None] = mapped_column(Integer, nullable=True, server_default="0")
@@ -104,6 +109,11 @@ class SeriesEpisode(Base):
     vote_count: Mapped[int | None] = mapped_column(Integer, nullable=True)
     episode_type: Mapped[str | None] = mapped_column(String(50), nullable=True)
     imdb_id: Mapped[str | None] = mapped_column(String(20), nullable=True)
+    has_iptv_source: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+    has_torrent_source: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+    torrent_source_checked_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
     tmdb_checked: Mapped[bool | None] = mapped_column(Boolean, default=False)
     # Legacy columns — exist in BD, added to ORM for Alembic alignment
     tmdb_not_found: Mapped[bool | None] = mapped_column(

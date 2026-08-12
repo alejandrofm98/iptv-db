@@ -68,6 +68,11 @@ class CatalogBase(Base):
     countries: Mapped[list[str] | None] = mapped_column(ARRAY(String(10)), nullable=True)
     group_normalizado: Mapped[str | None] = mapped_column(Text, nullable=True)
     logo: Mapped[str | None] = mapped_column(Text, nullable=True)
+    has_iptv_source: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+    has_torrent_source: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+    torrent_source_checked_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
     created_at: Mapped[datetime | None] = mapped_column(
         DateTime(timezone=True), default=lambda: datetime.now().astimezone()
     )

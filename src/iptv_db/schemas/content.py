@@ -45,6 +45,9 @@ class MovieCatalogDB(BaseModel):
     countries: list[str] | None = None
     group_normalizado: str | None = None
     logo: str | None = None
+    has_iptv_source: bool = False
+    has_torrent_source: bool = False
+    torrent_source_checked_at: datetime | None = None
     created_at: datetime | None = None
     updated_at: datetime | None = None
 
