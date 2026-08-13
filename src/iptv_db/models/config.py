@@ -28,9 +28,6 @@ class SyncMetadata(Base):
     total_canales: Mapped[int | None] = mapped_column(Integer, nullable=True, server_default="0")
     total_movies: Mapped[int | None] = mapped_column(Integer, nullable=True, server_default="0")
     total_series: Mapped[int | None] = mapped_column(Integer, nullable=True, server_default="0")
-    m3u_template_path: Mapped[str | None] = mapped_column(Text, nullable=True)
-    m3u_template_filename: Mapped[str | None] = mapped_column(Text, nullable=True)
-    m3u_size_mb: Mapped[float | None] = mapped_column(Numeric(10, 2), nullable=True)
     channels_con_logo: Mapped[int | None] = mapped_column(
         Integer, nullable=True, server_default="0"
     )

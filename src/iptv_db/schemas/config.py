@@ -22,9 +22,6 @@ class SyncMetadataDB(BaseModel):
     total_canales: int | None = None
     total_movies: int | None = None
     total_series: int | None = None
-    m3u_template_path: str | None = None
-    m3u_template_filename: str | None = None
-    m3u_size_mb: float | None = None
     channels_con_logo: int | None = None
     channels_sin_logo: int | None = None
     movies_con_logo: int | None = None
