@@ -16,7 +16,7 @@ from sqlalchemy import (
     UniqueConstraint,
     text,
 )
-from sqlalchemy.dialects.postgresql import ARRAY, UUID
+from sqlalchemy.dialects.postgresql import ARRAY, JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from iptv_db.models.base import Base
@@ -49,6 +49,7 @@ class SeriesCatalog(Base):
     logo: Mapped[str | None] = mapped_column(Text, nullable=True)
     has_iptv_source: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
     has_torrent_source: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+    torrent_languages: Mapped[list[str] | None] = mapped_column(JSONB, nullable=True)
     torrent_source_checked_at: Mapped[datetime | None] = mapped_column(
         DateTime(timezone=True), nullable=True
     )
@@ -111,6 +112,7 @@ class SeriesEpisode(Base):
     imdb_id: Mapped[str | None] = mapped_column(String(20), nullable=True)
     has_iptv_source: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
     has_torrent_source: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+    torrent_languages: Mapped[list[str] | None] = mapped_column(JSONB, nullable=True)
     torrent_source_checked_at: Mapped[datetime | None] = mapped_column(
         DateTime(timezone=True), nullable=True
     )

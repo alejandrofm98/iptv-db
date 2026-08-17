@@ -47,6 +47,7 @@ class MovieCatalogDB(BaseModel):
     logo: str | None = None
     has_iptv_source: bool = False
     has_torrent_source: bool = False
+    torrent_languages: list[str] | None = None
     torrent_source_checked_at: datetime | None = None
     created_at: datetime | None = None
     updated_at: datetime | None = None

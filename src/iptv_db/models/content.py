@@ -70,6 +70,7 @@ class CatalogBase(Base):
     logo: Mapped[str | None] = mapped_column(Text, nullable=True)
     has_iptv_source: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
     has_torrent_source: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+    torrent_languages: Mapped[list[str] | None] = mapped_column(JSONB, nullable=True)
     torrent_source_checked_at: Mapped[datetime | None] = mapped_column(
         DateTime(timezone=True), nullable=True
     )
