@@ -1,4 +1,4 @@
-"""Channel and channel favorites models."""
+"""Channel, channel favorites and hidden channel groups models."""
 
 import uuid
 from datetime import datetime
@@ -51,3 +51,23 @@ class ChannelFavorite(Base):
     )
 
     __table_args__ = (PrimaryKeyConstraint("user_id", "channel_provider_id"),)
+
+
+class HiddenChannelGroup(Base):
+    """Grupo de canales oculto por un usuario (alcance grupo + pais).
+
+    country == "" significa global (todos los paises).
+    """
+
+    __tablename__ = "hidden_channel_groups"
+
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False
+    )
+    country: Mapped[str] = mapped_column(String(10), nullable=False, default="")
+    group_name: Mapped[str] = mapped_column(String(255), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, default=lambda: datetime.now().astimezone()
+    )
+
+    __table_args__ = (PrimaryKeyConstraint("user_id", "country", "group_name"),)
