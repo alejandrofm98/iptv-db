@@ -18,6 +18,9 @@ class User(Base):
     password_hash: Mapped[str] = mapped_column(String(255), nullable=False)
     max_connections: Mapped[int | None] = mapped_column(Integer, default=2)
     is_active: Mapped[bool | None] = mapped_column(Boolean, default=True)
+    iptv_enabled: Mapped[bool | None] = mapped_column(
+        Boolean, nullable=False, default=True, server_default="true"
+    )
     role: Mapped[str | None] = mapped_column(String(20), default="user")
     expires_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     created_at: Mapped[datetime | None] = mapped_column(

@@ -14,6 +14,7 @@ class UserDB(BaseModel):
     password_hash: str
     max_connections: int | None = None
     is_active: bool | None = None
+    iptv_enabled: bool | None = None
     role: str | None = None
     expires_at: datetime | None = None
     created_at: datetime | None = None
