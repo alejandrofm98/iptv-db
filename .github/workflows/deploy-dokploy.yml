@@ -23,7 +23,10 @@ jobs:
           test -n "$DEPLOY_HOOK"
           curl --fail --silent --show-error \
             --retry 3 --retry-delay 5 \
-            -X POST "$DEPLOY_HOOK"
+            -X POST "$DEPLOY_HOOK" \
+            -H 'content-type: application/json' \
+            -H 'x-github-event: push' \
+            --data '{"ref":"refs/heads/${{ github.ref_name }}","head_commit":{"id":"${{ github.sha }}","message":"Deploy iptv-db"},"commits":[{"modified":["${{ github.workflow }}"]}]}'
 
   deploy-development:
     name: Deploy development
@@ -37,4 +40,7 @@ jobs:
           test -n "$DEPLOY_HOOK"
           curl --fail --silent --show-error \
             --retry 3 --retry-delay 5 \
-            -X POST "$DEPLOY_HOOK"
+            -X POST "$DEPLOY_HOOK" \
+            -H 'content-type: application/json' \
+            -H 'x-github-event: push' \
+            --data '{"ref":"refs/heads/${{ github.ref_name }}","head_commit":{"id":"${{ github.sha }}","message":"Deploy iptv-db"},"commits":[{"modified":["${{ github.workflow }}"]}]}'
