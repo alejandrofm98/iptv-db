@@ -122,6 +122,8 @@ class MovieCatalog(CatalogBase):
         ForeignKey("movies_metadata.tmdb_id", ondelete="SET NULL"),
         nullable=True,
     )
+    # Llave directa a addons Stremio (Cinemeta/Torrentio/IntroDB) sin pasar por metadata.
+    imdb_id: Mapped[str | None] = mapped_column(String(20), nullable=True)
     # Legacy columns — exist in BD, added to ORM for Alembic alignment
     not_found: Mapped[bool | None] = mapped_column(Boolean, nullable=True, server_default="false")
     retry_count: Mapped[int | None] = mapped_column(Integer, nullable=True, server_default="0")
@@ -135,6 +137,7 @@ class MovieCatalog(CatalogBase):
             unique=True,
             postgresql_where=text("tmdb_id IS NOT NULL"),
         ),
+        Index("ix_movies_catalog_imdb_id", "imdb_id"),
     )
 
     metadata_row: Mapped["MovieMetadata | None"] = relationship(

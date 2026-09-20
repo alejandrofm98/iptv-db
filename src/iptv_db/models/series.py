@@ -42,6 +42,8 @@ class SeriesCatalog(Base):
         ForeignKey("series_metadata.tmdb_id", ondelete="SET NULL"),
         nullable=True,
     )
+    # Llave directa a addons Stremio (Cinemeta/Torrentio/IntroDB) sin pasar por metadata.
+    imdb_id: Mapped[str | None] = mapped_column(String(20), nullable=True)
     nombre_dedup_key: Mapped[str | None] = mapped_column(Text, nullable=True)
     year: Mapped[int | None] = mapped_column(Integer, nullable=True)
     countries: Mapped[list[str] | None] = mapped_column(ARRAY(String(10)), nullable=True)
@@ -66,6 +68,7 @@ class SeriesCatalog(Base):
             unique=True,
             postgresql_where=text("tmdb_id IS NOT NULL"),
         ),
+        Index("ix_series_catalog_imdb_id", "imdb_id"),
     )
 
     created_at: Mapped[datetime | None] = mapped_column(

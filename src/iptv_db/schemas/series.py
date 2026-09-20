@@ -40,6 +40,7 @@ class SeriesCatalogDB(BaseModel):
     canonical_key: str | None = None
     provider_id: str | None = None
     tmdb_id: str | None = None
+    imdb_id: str | None = None
     nombre_dedup_key: str | None = None
     year: int | None = None
     countries: list[str] | None = None
