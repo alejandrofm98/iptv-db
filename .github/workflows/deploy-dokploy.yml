@@ -1,0 +1,40 @@
+name: Deploy Dokploy environments
+
+on:
+  push:
+    branches:
+      - main
+      - 'feat/**'
+
+concurrency:
+  group: dokploy-${{ github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  deploy-production:
+    name: Deploy production
+    if: github.ref_name == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Dokploy production deployment
+        env:
+          DEPLOY_HOOK: ${{ secrets.DOKPLOY_PRODUCTION_DEPLOY_HOOK }}
+        run: |
+          test -n "$DEPLOY_HOOK"
+          curl --fail --silent --show-error \
+            --retry 3 --retry-delay 5 \
+            -X POST "$DEPLOY_HOOK"
+
+  deploy-development:
+    name: Deploy development
+    if: github.ref_name == vars.DEV_DB_BRANCH
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Dokploy development deployment
+        env:
+          DEPLOY_HOOK: ${{ secrets.DOKPLOY_DEV_DEPLOY_HOOK }}
+        run: |
+          test -n "$DEPLOY_HOOK"
+          curl --fail --silent --show-error \
+            --retry 3 --retry-delay 5 \
+            -X POST "$DEPLOY_HOOK"
