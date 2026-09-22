@@ -7,6 +7,7 @@ from iptv_db.models.channel_mapping import ChannelMapping
 from iptv_db.models.channel_variant import ChannelVariant
 from iptv_db.models.config import Config, SyncMetadata
 from iptv_db.models.content import MovieCatalog, MovieMetadata, MovieStream
+from iptv_db.models.external_catalog import ExternalCatalogItem
 from iptv_db.models.playback_preference import PlaybackPreference
 from iptv_db.models.replay import Replay
 from iptv_db.models.scraper import ScraperFailure
@@ -25,6 +26,7 @@ __all__ = [
     "ChannelMapping",
     "ChannelVariant",
     "Config",
+    "ExternalCatalogItem",
     "HiddenChannelGroup",
     "MovieCatalog",
     "MovieMetadata",
