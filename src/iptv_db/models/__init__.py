@@ -14,6 +14,7 @@ from iptv_db.models.series import SeriesCatalog, SeriesEpisode, SeriesMetadata, 
 from iptv_db.models.trending import TrendingRanking
 from iptv_db.models.user import ActiveSession, User
 from iptv_db.models.video_segment import VideoSegment, VideoSegmentSync
+from iptv_db.models.vod_favorite import VodFavorite
 from iptv_db.models.watch_progress import WatchProgress
 
 __all__ = [
@@ -41,5 +42,6 @@ __all__ = [
     "User",
     "VideoSegment",
     "VideoSegmentSync",
+    "VodFavorite",
     "WatchProgress",
 ]

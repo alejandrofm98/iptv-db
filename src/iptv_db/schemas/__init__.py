@@ -12,6 +12,7 @@ from iptv_db.schemas.series import (
     SeriesStreamDB,
 )
 from iptv_db.schemas.user import ActiveSessionDB, UserDB
+from iptv_db.schemas.vod_favorite import VodFavoriteDB
 from iptv_db.schemas.watch_progress import WatchProgressDB
 
 __all__ = [
@@ -30,5 +31,6 @@ __all__ = [
     "SeriesStreamDB",
     "SyncMetadataDB",
     "UserDB",
+    "VodFavoriteDB",
     "WatchProgressDB",
 ]

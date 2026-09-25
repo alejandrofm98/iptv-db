@@ -22,6 +22,7 @@ def test_base_imports() -> None:
         User,
         VideoSegment,
         VideoSegmentSync,
+        VodFavorite,
         WatchProgress,
     )
 
@@ -44,6 +45,7 @@ def test_base_imports() -> None:
         "scraper_failures",
         "video_segment_sync",
         "video_segments",
+        "vod_favorites",
         "config",
         "sync_metadata",
     }
@@ -68,6 +70,7 @@ def test_schemas_imports() -> None:
         SeriesStreamDB,
         SyncMetadataDB,
         UserDB,
+        VodFavoriteDB,
         WatchProgressDB,
     )
 
